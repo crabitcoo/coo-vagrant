@@ -1,0 +1,3 @@
+# Coo Vagrant
+---
+
