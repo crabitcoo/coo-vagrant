@@ -2,26 +2,52 @@
 services:
   -
     general:
-      name: coo_monitor
+      name: coo-monitor
 
     network:
-      ip: &IP '192.168.50.20'
+      ip: &COO_MONITOR_IP '192.168.50.20'
 
     system:
       memory: 2048
       cpus: 2
 
     pkgs:
-      - elasticsearch: *IP
+      - elasticsearch: *COO_MONITOR_IP
 
-  # -
-  #   general:
-  #     name: coo_manage
+  -
+    general:
+      name: &COO_MANAGE coo-manage
 
-  #   network:
-  #     ip: '192.168.50.30'
+    network:
+      ip: '192.168.50.30'
 
-  #   system:
-  #     memory: 768
-  #     cpus: 1
+    system:
+      memory: 768
+      cpus: 1
 
+    pkgs:
+      - coo_service:
+        - *COO_MANAGE
+        - 0.1.0
+      - logstash: 
+        - *COO_MANAGE
+        - *COO_MONITOR_IP
+
+  -
+    general:
+      name: &COO_QUERY_ENGINE coo-query-engine
+
+    network:
+      ip: '192.168.50.40'
+
+    system:
+      memory: 768
+      cpus: 1
+
+    pkgs:
+      - coo_service:
+        - *COO_QUERY_ENGINE
+        - 0.1.0
+      - logstash: 
+        - *COO_QUERY_ENGINE
+        - *COO_MONITOR_IP

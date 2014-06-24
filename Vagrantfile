@@ -41,8 +41,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |cfg|
             svcdef.vm.provision :shell do |shell|
               if pkg.class == Hash
                 pkg_name = pkg.keys[0]
+
                 shell.path = "pkgs/#{pkg_name}/setup.sh"
-                shell.args = "/vagrant/pkgs/#{pkg_name} #{pkg[pkg_name]}"
+
+                if pkg[pkg_name].class == Array
+                  shell.args = "/vagrant/pkgs/#{pkg_name} #{pkg[pkg_name].join(' ')}"
+                else 
+                  shell.args = "/vagrant/pkgs/#{pkg_name} #{pkg[pkg_name]}"
+                end
               else
                 shell.path = "pkgs/#{pkg}/setup.sh"
                 shell.args = "/vagrant/pkgs/#{pkg}"

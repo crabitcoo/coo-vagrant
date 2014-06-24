@@ -14,3 +14,7 @@ echo "${COO_USER_NAME}:${COO_USER_PASSWORD}" | chpasswd
 # prepare the apps folder
 mkdir ${APPS_HOME}
 chown "${COO_USER_NAME}:${COO_USER_NAME}" ${APPS_HOME}
+
+# prepare the services folder
+mkdir ${SVCS_HOME}
+chown "${COO_USER_NAME}:${COO_USER_NAME}" ${SVCS_HOME}
